@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps
+  namespace: apps
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    nginx.ingress.kubernetes.io/from-to-www-redirect: 'true'
+spec:
+  tls:
+    - hosts:
+        - cristianaldea.com
+        - www.cristianaldea.com
+        - apps.cristianaldea.com
+      secretName: apps-cert
+  rules:
+    - host: www.cristianaldea.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: megaphone-ui
+                port:
+                  number: 80
+    - host: apps.cristianaldea.com
+      http:
+        paths:
+          - path: /mull-recognition/
+            pathType: Prefix
+            backend:
+              service:
+                name: mull-recognition
+                port:
+                  number: 80

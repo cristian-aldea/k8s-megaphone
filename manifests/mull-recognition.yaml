@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mull-recognition
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mull-recognition
+  template:
+    metadata:
+      labels:
+        app: mull-recognition
+    spec:
+      containers:
+        - name: mull-recognition
+          imagePullPolicy: Always
+          image: cristianaldea/mull-recognition:latest
+          ports:
+            - name: main
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mull-recognition
+  namespace: apps
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: frontend
+  selector:
+    app: mull-recognition

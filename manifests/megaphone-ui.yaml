@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: megaphone-ui
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: megaphone-ui
+  template:
+    metadata:
+      labels:
+        app: megaphone-ui
+    spec:
+      containers:
+        - name: megaphone-ui
+          imagePullPolicy: Always
+          image: cristianaldea/megaphone-ui:latest
+          ports:
+            - name: main
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: megaphone-ui
+  namespace: apps
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: frontend
+  selector:
+    app: megaphone-ui
