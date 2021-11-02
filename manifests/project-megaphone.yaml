@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-megaphone
+  namespace: apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-megaphone
+  template:
+    metadata:
+      labels:
+        app: project-megaphone
+    spec:
+      containers:
+        - name: project-megaphone
+          imagePullPolicy: Always
+          image: cristianaldea/project-megaphone:latest
+          ports:
+            - name: main
+              containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: project-megaphone
+  namespace: apps
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: frontend
+  selector:
+    app: project-megaphone

@@ -4,15 +4,16 @@ metadata:
   name: apps
   namespace: apps
   annotations:
-    kubernetes.io/ingress.class: 'nginx'
-    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
-    nginx.ingress.kubernetes.io/from-to-www-redirect: 'true'
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   tls:
     - hosts:
         - cristianaldea.com
         - www.cristianaldea.com
         - apps.cristianaldea.com
+        - blog.cristianaldea.com
       secretName: apps-cert
   rules:
     - host: www.cristianaldea.com
@@ -22,7 +23,17 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: megaphone-ui
+                name: project-megaphone
+                port:
+                  number: 80
+    - host: blog.cristianaldea.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: starlog
                 port:
                   number: 80
     - host: apps.cristianaldea.com

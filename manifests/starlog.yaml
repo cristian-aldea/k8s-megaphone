@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: megaphone-ui
+  name: starlog
   namespace: apps
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: megaphone-ui
+      app: starlog
   template:
     metadata:
       labels:
-        app: megaphone-ui
+        app: starlog
     spec:
       containers:
-        - name: megaphone-ui
+        - name: starlog
           imagePullPolicy: Always
-          image: cristianaldea/megaphone-ui:latest
+          image: cristianaldea/starlog:latest
           ports:
             - name: main
               containerPort: 80
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: megaphone-ui
+  name: starlog
   namespace: apps
 spec:
   type: ClusterIP
@@ -35,4 +35,4 @@ spec:
       protocol: TCP
       name: frontend
   selector:
-    app: megaphone-ui
+    app: starlog

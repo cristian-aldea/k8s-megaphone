@@ -9,6 +9,7 @@ spec:
     - cristianaldea.com
     - www.cristianaldea.com
     - apps.cristianaldea.com
+    - blog.cristianaldea.com
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
